@@ -1,0 +1,9 @@
+[package]
+name = "marketdata-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+websockets = "0.3.0"
+tokio = { version = "1", features = ["full"] }
+mini-redis = "0.4"
