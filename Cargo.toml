@@ -7,3 +7,4 @@ edition = "2021"
 websockets = "0.3.0"
 tokio = { version = "1", features = ["full"] }
 mini-redis = "0.4"
+bytes = "1"

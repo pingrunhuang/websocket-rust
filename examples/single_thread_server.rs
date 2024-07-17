@@ -6,19 +6,14 @@ async fn main() {
     let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
 
     println!("Listening on 127.0.0.1:6379");
+    
     loop {
-        let (socket, _) = listener.accept().await.unwrap();
-        let sid = socket.local_addr().unwrap();
+        let (socket, addr) = listener.accept().await.unwrap();
         // this will still block the main thread and wait
-        // process(socket).await;
-        // this will throw the task into another thread so that concurrency can be achieved
-        tokio::spawn(async move{
-            process(socket).await;
-        });
-        println!("processed socket: {:?}", sid);
+        process(socket).await;
+        println!("Done processing request from {:?}", addr);
     }
 }
-
 
 async fn process(socket: TcpStream) {
     let mut conn = Connection::new(socket);
@@ -28,7 +23,4 @@ async fn process(socket: TcpStream) {
         let resp = Frame::Error("unimplemented".to_string());
         conn.write_frame(&resp).await.unwrap()
     }
-}
-
-async fn process_commands(socket: TcpStream){
 }
